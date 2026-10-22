@@ -1,4 +1,4 @@
-﻿from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 import os
 
@@ -22,6 +22,9 @@ def init_db():
     ''')
     conn.commit()
     conn.close()
+
+# Initialize database immediately when the app boots up on Render
+init_db()
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -92,5 +95,4 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    init_db()
     app.run(host='0.0.0.0', port=5000, debug=True)
